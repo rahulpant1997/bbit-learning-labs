@@ -14,8 +14,10 @@
 
 import os
 
-import pika
-from producer_interface import mqProducerInterface
+import pika  # pylint: disable=import-error
+from producer_interface import (  # pylint: disable=import-error
+    mqProducerInterface,
+)
 
 
 class mqProducer(mqProducerInterface):
@@ -35,7 +37,9 @@ class mqProducer(mqProducerInterface):
         self.m_channel = self.m_connection.channel()
 
         # Create the exchange if not already present
-        self.m_channel.exchange_declare(self.m_exchange_name, exchange_type="topic")
+        self.m_channel.exchange_declare(
+            self.m_exchange_name, exchange_type="topic"
+        )
 
     def publishOrder(self, message: str) -> None:
         # Basic Publish to Exchange
@@ -48,6 +52,6 @@ class mqProducer(mqProducerInterface):
         print(" [x] Sent Orders")
 
     def __del__(self) -> None:
-        print(f"Closing RMQ connection on destruction")
+        print("Closing RMQ connection on destruction")
         self.m_channel.close()
         self.m_connection.close()

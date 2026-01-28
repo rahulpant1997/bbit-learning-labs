@@ -14,8 +14,10 @@
 
 import os
 
-import pika
-from consumer_interface import mqConsumerInterface
+import pika  # pylint: disable=import-error
+from consumer_interface import (  # pylint: disable=import-error
+    mqConsumerInterface,
+)
 
 
 class mqConsumer(mqConsumerInterface):
@@ -41,7 +43,9 @@ class mqConsumer(mqConsumerInterface):
         self.m_channel.queue_declare(queue=self.m_queue_name)
 
         # Create the exchange if not already present
-        self.m_channel.exchange_declare(self.m_exchange_name,exchange_type="topic")
+        self.m_channel.exchange_declare(
+            self.m_exchange_name, exchange_type="topic"
+        )
 
         # Bind Binding Key to Queue on the exchange
         self.m_channel.queue_bind(
@@ -56,17 +60,20 @@ class mqConsumer(mqConsumerInterface):
         )
 
     def on_message_callback(
-        self, channel, method_frame, header_frame, body
+        self,
+        channel,
+        method_frame,
+        header_frame,  # pylint: disable=unused-argument
+        body,
     ) -> None:
-        # Acknowledge Message 
+        # Acknowledge Message
         channel.basic_ack(method_frame.delivery_tag, False)
 
         # Print Message
         print(f" [x] Received Message: {body}")
 
-       
     def startConsuming(self) -> None:
-        
+
         # Print " [*] Waiting for messages. To exit press CTRL+C"
         print(" [*] Waiting for messages. To exit press CTRL+C")
 

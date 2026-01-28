@@ -1,0 +1,6 @@
+# If you are doing the labs, this file is not for you.
+# This file is used for repository maintenance.
+black
+isort
+pylint
+

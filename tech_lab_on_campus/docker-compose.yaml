@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  rabbitmq:
+    image: 'artprod.dev.bloomberg.com/rabbitmq'
+    hostname: rabbit
+    ports:
+      # AMQ Protocol Port
+      - '30424:30424'
+      # RMQ Management UI Port
+      - '30439:30439'
+    environment:
+     - VHOST=rmq-docker-broker
+  rmq_lab:
+    build: tech_lab_build
+    depends_on:
+      - rabbitmq
+    ports:
+      #Jupyter notebook port
+      - '8888:8888'
+    volumes:
+      #TODO fill in the full path of your current repo location
+      - ./:/app
+    environment:
+      AMQP_URL: 'amqp://rmq-docker-broker:rmq-docker-broker@rabbit:30424/rmq-docker-broker' #Internal BBGH URL.

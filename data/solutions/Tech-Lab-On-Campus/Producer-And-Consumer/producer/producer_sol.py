@@ -14,8 +14,10 @@
 
 import os
 
-import pika
-from producer_interface import mqProducerInterface
+import pika  # pylint: disable=import-error
+from producer_interface import (  # pylint: disable=import-error
+    mqProducerInterface,
+)
 
 
 class mqProducer(mqProducerInterface):
@@ -48,6 +50,6 @@ class mqProducer(mqProducerInterface):
         print(" [x] Sent Orders")
 
     def __del__(self) -> None:
-        print(f"Closing RMQ connection on destruction")
+        print("Closing RMQ connection on destruction")
         self.m_channel.close()
         self.m_connection.close()

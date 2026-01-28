@@ -15,7 +15,9 @@
 import os
 
 import pika  # pylint: disable=import-error
-from producer_interface import mqProducerInterface
+from producer_interface import (  # pylint: disable=import-error
+    mqProducerInterface,
+)
 from stock import Stock
 
 

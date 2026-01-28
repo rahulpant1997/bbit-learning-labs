@@ -19,11 +19,11 @@ import sol_producer
 
 
 def main(ticker: str, price: float, sector: str) -> None:
-    marketWatch = sol_producer.mqProducer("Market Watch Exchange")
+    market_watch = sol_producer.mqProducer("Market Watch Exchange")
 
     stock = sol_producer.Stock(ticker, price)
 
-    marketWatch.publishOrder(sector=sector, stock=stock)
+    market_watch.publishOrder(sector=sector, stock=stock)
 
 
 if __name__ == "__main__":

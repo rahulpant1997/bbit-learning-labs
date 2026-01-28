@@ -14,20 +14,23 @@
 
 import argparse
 import sys
+from typing import List
 
 import sol_consumer
 
 
-def main(tickers: list[str], sectors: list[str], firm: str) -> None:
+def main(tickers: List[str], sectors: List[str], firm: str) -> None:
     consumer = sol_consumer.mqConsumer("Market Watch Exchange")
     consumer.createQueue(firm)
 
     topics = []
 
     if tickers:
-        [topics.append(f"*.{ticker}.*") for ticker in tickers]
+        for ticker in tickers:
+            topics.append(f"*.{ticker}.*")
     if sectors:
-        [topics.append(f"*.*.{sector}") for sector in sectors]
+        for sector in sectors:
+            topics.append(f"*.*.{sector}")
 
     for topic in topics:
         consumer.bindQueueToExchange(queueName=firm, topic=topic)

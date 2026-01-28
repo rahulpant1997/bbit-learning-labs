@@ -1,4 +1,6 @@
+bqplot
+ipytest
 numpy
 pytest
-ipytest
-bqplot
+# Our base image has an older version.
+voila>=0.4.0

@@ -14,8 +14,10 @@
 
 import os
 
-import pika
-from consumer_interface import mqConsumerInterface
+import pika  # pylint: disable=import-error
+from consumer_interface import (  # pylint: disable=import-error
+    mqConsumerInterface,
+)
 
 
 class mqConsumer(mqConsumerInterface):
@@ -56,23 +58,27 @@ class mqConsumer(mqConsumerInterface):
         )
 
     def on_message_callback(
-        self, channel, method_frame, header_frame, body
+        self,
+        channel,
+        method_frame,
+        header_frame,  # pylint: disable=unused-argument
+        body,
     ) -> None:
-        # Acknowledge Message 
+        # Acknowledge Message
         channel.basic_ack(method_frame.delivery_tag, False)
 
         # Print Message
         print(f" [x] Received Message: {body}")
 
     def startConsuming(self) -> None:
-        
+
         # Print " [*] Waiting for messages. To exit press CTRL+C"
         print(" [*] Waiting for messages. To exit press CTRL+C")
 
         # Start consuming messages
         self.m_channel.start_consuming()
-    
+
     def __del__(self) -> None:
-        print(f"Closing RMQ connection on destruction")
+        print("Closing RMQ connection on destruction")
         self.m_channel.close()
         self.m_connection.close()
